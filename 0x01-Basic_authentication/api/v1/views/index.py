@@ -7,29 +7,10 @@ from api.v1.views import app_views
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status() -> str:
-    """ GET /api/v1/unauthorized
+    """ GET /api/v1/status
     Return:
-      raise a 401 error
+      - the status of the API
     """
-    abort(401, description="Unauthorized")
-
-
-@app_views.route('/forbidden', methods=['GET'], strict_lashes= False)
-def forbid() -> str:
-  """
-  GET /api/v1/forbidden
-  Return:
-  - raise a 403 error
-  """   
-  abort(403,description="Forbidden") 
-  
-@app_views.route('/status', methods= ['GET'], strict_lashes=False )  
-def status() -> str:
-    """
-    GET /api/v1/status
-    Return:
-    - the status of API
-    """  
     return jsonify({"status": "OK"})
 
 
@@ -43,3 +24,26 @@ def stats() -> str:
     stats = {}
     stats['users'] = User.count()
     return jsonify(stats)
+
+
+@app_views.route('/unauthorized/', strict_slashes=False)
+def test_unauthorized() -> str:
+    """raise error for unauthorized request
+
+    Returns:
+        str: 401 status code
+    """
+    abort(401)
+
+
+@app_views.route('/forbidden/', strict_slashes=False)
+def handle_forbidden() -> str:
+    """handles forbidden requests
+
+    Args:
+        error (obj): error obj
+
+    Returns:
+        str: status code -> 403
+    """
+    abort(403)
